@@ -1,8 +1,8 @@
 ---
 title: ProfiloAI
-emoji: ""
+emoji: "⚡"
 colorFrom: orange
-colorTo: gray
+colorTo: blue
 sdk: gradio
 sdk_version: 4.26.0
 app_file: app.py
