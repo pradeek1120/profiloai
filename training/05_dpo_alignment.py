@@ -1,4 +1,5 @@
 """DPO alignment after SFT fine-tuning."""
+import inspect
 import json
 import os
 from pathlib import Path
@@ -20,7 +21,28 @@ DPO_DATA = ROOT / "data/processed/dpo_dataset.jsonl"
 OUTPUT_DIR = ROOT / "outputs/profiloai-dpo"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-DPO_CONFIG = DPOConfig(output_dir=str(OUTPUT_DIR), beta=0.1, loss_type="sigmoid", num_train_epochs=1, per_device_train_batch_size=2, gradient_accumulation_steps=8, learning_rate=5e-7, bf16=True, max_length=2048, max_prompt_length=1024, logging_steps=5, save_strategy="steps", save_steps=100, save_total_limit=2, remove_unused_columns=False)
+
+def build_dpo_config():
+    config_values = {
+        "output_dir": str(OUTPUT_DIR),
+        "beta": 0.1,
+        "loss_type": "sigmoid",
+        "num_train_epochs": 1,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 5e-7,
+        "bf16": True,
+        "max_length": 2048,
+        "max_prompt_length": 1024,
+        "logging_steps": 5,
+        "save_strategy": "steps",
+        "save_steps": 100,
+        "save_total_limit": 2,
+        "remove_unused_columns": False,
+    }
+    valid_keys = inspect.signature(DPOConfig).parameters
+    filtered = {key: value for key, value in config_values.items() if key in valid_keys}
+    return DPOConfig(**filtered)
 
 def train_dpo():
     if not SFT_PATH.exists():
@@ -49,7 +71,20 @@ def train_dpo():
     ref_model = PeftModel.from_pretrained(ref_base_model, str(SFT_PATH), is_trainable=False)
     model.print_trainable_parameters()
 
-    trainer = DPOTrainer(model=model, ref_model=ref_model, args=DPO_CONFIG, train_dataset=train_ds, eval_dataset=val_ds, processing_class=tokenizer)
+    dpo_config = build_dpo_config()
+    trainer_kwargs = {
+        "model": model,
+        "ref_model": ref_model,
+        "args": dpo_config,
+        "train_dataset": train_ds,
+        "eval_dataset": val_ds,
+    }
+    trainer_signature = inspect.signature(DPOTrainer.__init__).parameters
+    if "processing_class" in trainer_signature:
+        trainer_kwargs["processing_class"] = tokenizer
+    if "tokenizer" in trainer_signature:
+        trainer_kwargs["tokenizer"] = tokenizer
+    trainer = DPOTrainer(**trainer_kwargs)
     trainer.train()
     trainer.save_model(str(OUTPUT_DIR / "final"))
     tokenizer.save_pretrained(str(OUTPUT_DIR / "final"))
