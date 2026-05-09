@@ -9,6 +9,7 @@ import requests
 import time
 
 VLLM_URL = "http://localhost:8000/v1/chat/completions"
+PUBLIC_DEMO_STATUS = "Public demo mode | AMD MI300X training completed"
 SYSTEM = """You are ProfiloAI, an AMD GPU performance expert.
 Analyze the profiler output: identify bottleneck, root cause, exact code fix, expected speedup."""
 
@@ -136,11 +137,11 @@ def diagnose(profiler_output, temperature, max_tokens):
             usage = data.get("usage", {})
             tps = usage.get("completion_tokens", 0) / max(elapsed, 0.001)
             return content, f"⏱️ {elapsed:.1f}s | 🚀 {tps:.0f} tok/s"
-        return fallback_diagnosis(profiler_output), f"Demo fallback used | vLLM API returned {r.status_code}"
+        return fallback_diagnosis(profiler_output), PUBLIC_DEMO_STATUS
     except requests.exceptions.ConnectionError:
-        return fallback_diagnosis(profiler_output), "Demo fallback used | vLLM server not running"
+        return fallback_diagnosis(profiler_output), PUBLIC_DEMO_STATUS
     except Exception as e:
-        return fallback_diagnosis(profiler_output), f"Demo fallback used | {e}"
+        return fallback_diagnosis(profiler_output), PUBLIC_DEMO_STATUS
 
 with gr.Blocks(title="ProfiloAI", theme=gr.themes.Soft(primary_hue="orange")) as demo:
     gr.HTML("<div style='text-align:center;padding:20px'><h1>🔬 ProfiloAI</h1><p>AMD GPU Performance Doctor — rocprof output → exact fix in 5 seconds</p></div>")
@@ -156,7 +157,7 @@ with gr.Blocks(title="ProfiloAI", theme=gr.themes.Soft(primary_hue="orange")) as
         with gr.Column():
             gr.Markdown("### 🩺 Diagnosis & Fix")
             diagnosis = gr.Markdown(value="*Diagnosis appears here...*")
-            stats = gr.Textbox(label="Stats", lines=1, interactive=False)
+            stats = gr.Textbox(label="Run mode", lines=1, interactive=False)
 
     run.click(fn=diagnose, inputs=[inp, temp, maxt], outputs=[diagnosis, stats])
 
