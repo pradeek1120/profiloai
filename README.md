@@ -1,7 +1,7 @@
 ---
 title: ProfiloAI
 emoji: "⚡"
-colorFrom: orange
+colorFrom: yellow
 colorTo: blue
 sdk: gradio
 sdk_version: 4.26.0
