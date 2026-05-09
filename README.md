@@ -1,3 +1,15 @@
+---
+title: ProfiloAI
+emoji: ""
+colorFrom: orange
+colorTo: gray
+sdk: gradio
+sdk_version: 4.26.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # ProfiloAI - AMD GPU Performance Doctor
 
 ProfiloAI helps AMD ROCm developers turn profiler output into a clear performance diagnosis. Paste `rocprof`, `omniperf`, or training-loop metrics and the app returns:
