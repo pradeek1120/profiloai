@@ -37,6 +37,7 @@ def build_sft_config():
         "max_seq_length": 2048,
         "max_length": 2048,
         "logging_steps": 10,
+        "report_to": [],
         "save_strategy": "steps",
         "save_steps": 200,
         "save_total_limit": 3,
@@ -55,6 +56,7 @@ def build_sft_config():
 
 def train():
     print("ProfiloAI - SFT Fine-Tuning on AMD MI300X")
+    os.environ.setdefault("WANDB_DISABLED", "true")
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Missing dataset: {DATA_PATH}. Run scripts 01, 02, 09, and 03 first.")
     if torch.cuda.is_available():

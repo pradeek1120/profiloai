@@ -35,6 +35,7 @@ def build_dpo_config():
         "max_length": 2048,
         "max_prompt_length": 1024,
         "logging_steps": 5,
+        "report_to": [],
         "save_strategy": "steps",
         "save_steps": 100,
         "save_total_limit": 2,
@@ -45,6 +46,7 @@ def build_dpo_config():
     return DPOConfig(**filtered)
 
 def train_dpo():
+    os.environ.setdefault("WANDB_DISABLED", "true")
     if not SFT_PATH.exists():
         raise FileNotFoundError(f"Run script 04 first! {SFT_PATH} not found.")
     if not DPO_DATA.exists():
