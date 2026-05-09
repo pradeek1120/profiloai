@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Environments and secrets
+.env
+.venv/
+venv/
+
+# Model and training outputs
+outputs/
+wandb/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Local OS/editor files
+.DS_Store
+.idea/
+.vscode/
+.agents/
+.codex/
