@@ -7,20 +7,27 @@ import os
 
 load_dotenv()
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATH = ROOT / "outputs/profiloai-dpo/final"
+ADAPTER_PATH = ROOT / "outputs/profiloai-dpo/final"
 BASE_MODEL = os.getenv("BASE_MODEL", "mistralai/Mistral-7B-Instruct-v0.3")
-SERVE_MODEL = str(MODEL_PATH) if MODEL_PATH.exists() else BASE_MODEL
 PORT = 8000
 
-print(f"Starting vLLM server with: {SERVE_MODEL}")
+adapter_config = ADAPTER_PATH / "adapter_config.json"
+use_lora_adapter = adapter_config.exists()
+
+if use_lora_adapter:
+    print(f"Starting vLLM server with base model: {BASE_MODEL}")
+    print(f"Loading ProfiloAI LoRA adapter: {ADAPTER_PATH}")
+else:
+    print(f"Starting vLLM server with: {BASE_MODEL}")
+
 cmd = [
     sys.executable,
     "-m",
     "vllm.entrypoints.openai.api_server",
     "--model",
-    SERVE_MODEL,
+    BASE_MODEL,
     "--served-model-name",
-    "profiloai",
+    "profiloai-base" if use_lora_adapter else "profiloai",
     "--dtype",
     "bfloat16",
     "--port",
@@ -33,6 +40,13 @@ cmd = [
     "0.90",
     "--trust-remote-code",
 ]
+
+if use_lora_adapter:
+    cmd.extend([
+        "--enable-lora",
+        "--lora-modules",
+        f"profiloai={ADAPTER_PATH}",
+    ])
 
 try:
     process = subprocess.Popen(cmd)
