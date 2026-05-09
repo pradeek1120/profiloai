@@ -4,7 +4,7 @@ Use this file when running ProfiloAI on AMD Developer Cloud with MI300X credits.
 
 ## Goal
 
-Show that ProfiloAI uses AMD Developer Cloud, ROCm, PyTorch, Hugging Face fine-tuning, and vLLM on MI300X.
+Show that ProfiloAI uses AMD Developer Cloud, ROCm, PyTorch, and Hugging Face fine-tuning on MI300X. The repo also includes an optional vLLM-compatible serving path for GPU deployment.
 
 ## 1. Start The AMD Cloud Instance
 
@@ -123,7 +123,7 @@ evaluation/results/
 
 Use the benchmark report in your slides and video only after it is generated on MI300X.
 
-## 8. Serve With vLLM
+## 8. Optional Serving Check
 
 Terminal 1:
 
@@ -138,6 +138,8 @@ python3 ui/08_gradio_ui.py
 ```
 
 Open the Gradio URL and test the examples.
+
+If vLLM is not available in the current ROCm image, keep the public Gradio demo in lightweight mode and use the MI300X training and benchmark evidence as the main submission proof.
 
 ## 9. Submission Evidence Checklist
 
@@ -158,5 +160,5 @@ Include or mention:
 Use this only after running the cloud steps:
 
 ```text
-ProfiloAI was fine-tuned and benchmarked on AMD Developer Cloud using AMD Instinct MI300X, ROCm, PyTorch, Hugging Face PEFT/TRL, and served through vLLM with a Gradio interface.
+ProfiloAI was fine-tuned and benchmarked on AMD Developer Cloud using AMD Instinct MI300X, ROCm, PyTorch, and Hugging Face PEFT/TRL. The public Gradio demo runs in lightweight mode for judge access, and the repo includes a vLLM-compatible serving script for GPU deployment.
 ```

@@ -12,11 +12,11 @@ ProfiloAI turns AMD rocprof or omniperf output into a plain-English bottleneck d
 
 AMD GPU profiling tools expose powerful metrics, but many developers struggle to turn those numbers into a concrete fix. ProfiloAI is a developer tool for AMD Instinct and ROCm users: paste profiler output from rocprof, omniperf, or a PyTorch training run, and the app explains what is slow, why it is slow, and what code change to try next.
 
-The project targets the AMD Developer Hackathon Fine-Tuning on AMD GPUs track. It includes a synthetic domain dataset of AMD GPU bottleneck scenarios, LoRA SFT training code, DPO alignment code, benchmark scripts, vLLM serving, and a Gradio demo. The final run is designed for AMD Developer Cloud with AMD Instinct MI300X and ROCm. The hosted Gradio app also includes a fallback diagnosis engine so judges can try the product even when the fine-tuned model server is offline.
+The project targets the AMD Developer Hackathon Fine-Tuning on AMD GPUs track. It includes a synthetic domain dataset of AMD GPU bottleneck scenarios, LoRA SFT training code, DPO alignment code, benchmark scripts, a vLLM-compatible serving script, and a Gradio demo. The final training and benchmark run was completed on AMD Developer Cloud with AMD Instinct MI300X and ROCm. The hosted Hugging Face Space runs in lightweight public demo mode so judges can try the product without needing a live GPU server.
 
 ## Technology Tags
 
-AMD Developer Cloud, ROCm, MI300X, PyTorch, Hugging Face, LoRA, DPO, vLLM, Gradio, GPU profiling, developer tools
+AMD Developer Cloud, ROCm, MI300X, PyTorch, Hugging Face, LoRA, DPO, Gradio, GPU profiling, developer tools
 
 ## Track Fit
 
@@ -24,7 +24,8 @@ Track 2: Fine-Tuning on AMD GPUs
 
 Why it fits:
 - Domain-specific LLM assistant for AMD GPU performance diagnosis.
-- Uses PyTorch, Hugging Face, PEFT/LoRA, TRL, and vLLM.
+- Uses PyTorch, Hugging Face, PEFT/LoRA, and TRL for AMD GPU fine-tuning.
+- Includes a vLLM-compatible serving script for future GPU deployment.
 - Designed for AMD Instinct MI300X and ROCm profiling workflows.
 - Includes `scripts/00_check_amd_cloud.py` to capture non-secret AMD Cloud / ROCm evidence.
 
@@ -34,7 +35,7 @@ Why it fits:
 2. Pick an example such as Low Bandwidth, DataLoader Bottleneck, or Warp Divergence.
 3. Click Diagnose.
 4. Show the result: bottleneck, root cause, concrete fix, and expected speedup.
-5. Explain that the app uses vLLM when the fine-tuned model server is available, and a deterministic fallback when hosted without GPU.
+5. Explain that the public demo runs in lightweight mode, while training and benchmarking were completed on AMD Developer Cloud MI300X.
 
 ## Repository Checklist
 
@@ -57,12 +58,12 @@ Use these in the video, slides, or repo artifacts:
 - training command/log for `python3 training/04_finetune_sft.py`
 - DPO command/log for `python3 training/05_dpo_alignment.py`
 - benchmark report from `python3 evaluation/benchmark_comparison.py`
-- vLLM server command running `python3 serving/07_serve_vllm.py`
+- optional: vLLM-compatible serving script in `serving/07_serve_vllm.py`
 
 ## Video Script
 
 1. Problem: ROCm profiler output is useful but hard to convert into code fixes.
-2. AMD stack: show AMD Developer Cloud MI300X, ROCm, PyTorch, Hugging Face, PEFT/TRL, and vLLM.
+2. AMD stack: show AMD Developer Cloud MI300X, ROCm, PyTorch, Hugging Face, and PEFT/TRL.
 3. Product: open the Gradio app and load a profiler example.
 4. Demo: click Diagnose and show bottleneck, root cause, code fix, and speedup estimate.
 5. Technical proof: show training/benchmark logs or the benchmark report.
@@ -73,7 +74,7 @@ Use these in the video, slides, or repo artifacts:
 1. Title: ProfiloAI - AMD GPU Performance Doctor
 2. Problem: profiler metrics are hard to act on
 3. Solution: domain-tuned assistant for AMD GPU bottlenecks
-4. AMD Cloud architecture: MI300X + ROCm + PyTorch + HF + vLLM + Gradio
+4. AMD Cloud architecture: MI300X + ROCm + PyTorch + HF PEFT/TRL + Gradio
 5. Demo screenshots
 6. Bottleneck coverage
 7. Benchmark results after MI300X run
@@ -95,5 +96,51 @@ ProfiloAI is a submission-ready prototype with a working Gradio demo and a compl
 After MI300X training and benchmark:
 
 ```text
-ProfiloAI was fine-tuned and benchmarked on AMD Developer Cloud using AMD Instinct MI300X, ROCm, PyTorch, Hugging Face PEFT/TRL, and served through vLLM with a Gradio interface.
+ProfiloAI was fine-tuned and benchmarked on AMD Developer Cloud using AMD Instinct MI300X, ROCm, PyTorch, and Hugging Face PEFT/TRL. The public Gradio demo runs in lightweight mode for judge access, and the repo includes a vLLM-compatible serving script for GPU deployment.
+```
+
+## Final Results
+
+```text
+Base model score: 40.5%
+ProfiloAI score: 46.5%
+Improvement: +14.8%
+```
+
+## Final Submission Fields
+
+Project name:
+
+```text
+ProfiloAI - AMD GPU Performance Doctor
+```
+
+Short description:
+
+```text
+ProfiloAI turns AMD GPU profiler output into a plain-English diagnosis, root cause, code fix, and expected speedup.
+```
+
+GitHub repository:
+
+```text
+https://github.com/pradeek1120/profiloai
+```
+
+Demo URL:
+
+```text
+https://huggingface.co/spaces/Pradeerock/profiloai
+```
+
+Safe final claim:
+
+```text
+ProfiloAI was fine-tuned and benchmarked on AMD Developer Cloud using AMD Instinct MI300X, ROCm, PyTorch, and Hugging Face PEFT/TRL. The public Hugging Face Space runs in lightweight demo mode so judges can test the workflow without a live GPU server. The benchmark improved from 40.5% to 46.5%, a +14.8% relative improvement.
+```
+
+Do not claim:
+
+```text
+The live public demo is powered by vLLM.
 ```

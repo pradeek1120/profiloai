@@ -20,11 +20,11 @@ ProfiloAI helps AMD ROCm developers turn profiler output into a clear performanc
 - a concrete code fix
 - an expected speedup range
 
-This project is prepared for the **AMD Developer Hackathon** under **Track 2: Fine-Tuning on AMD GPUs**. The intended final run is on **AMD Developer Cloud with AMD Instinct MI300X**, using ROCm, PyTorch, Hugging Face PEFT/TRL, and vLLM.
+This project is prepared for the **AMD Developer Hackathon** under **Track 2: Fine-Tuning on AMD GPUs**. The final evidence run was completed on **AMD Developer Cloud with AMD Instinct MI300X**, using ROCm, PyTorch, and Hugging Face PEFT/TRL. The repo also includes a vLLM-compatible serving script for GPU deployment.
 
 ## Why It Matters
 
-GPU profilers are powerful, but their output is hard to act on quickly. ProfiloAI acts like a performance assistant for AMD Instinct/ROCm users, especially developers working on PyTorch, Hugging Face, and vLLM workloads.
+GPU profilers are powerful, but their output is hard to act on quickly. ProfiloAI acts like a performance assistant for AMD Instinct/ROCm users, especially developers working on PyTorch and Hugging Face training workloads.
 
 ## Hackathon Fit
 
@@ -34,7 +34,7 @@ ProfiloAI matches the Fine-Tuning on AMD GPUs track because it is a domain-speci
 - MI300X / ROCm environment evidence
 - LoRA SFT training on AMD GPU
 - DPO alignment or preference tuning
-- vLLM serving
+- optional vLLM-compatible serving proof
 - a working Gradio demo URL
 - benchmark results generated after training
 
@@ -44,8 +44,8 @@ Use [AMD_CLOUD_RUNBOOK.md](AMD_CLOUD_RUNBOOK.md) as the step-by-step cloud check
 
 The Gradio app works in two modes:
 
-1. **Model mode:** calls a local vLLM OpenAI-compatible server at `localhost:8000`.
-2. **Fallback demo mode:** if vLLM is not running, it still gives deterministic diagnoses for common AMD GPU bottlenecks. This keeps the hosted demo usable for judges, but the final submission should still include AMD Cloud training evidence.
+1. **Model mode:** calls a local OpenAI-compatible model server at `localhost:8000` when available.
+2. **Public demo mode:** if no live GPU server is running, it still gives deterministic diagnoses for common AMD GPU bottlenecks. This keeps the hosted demo usable for judges, while the final performance claim comes from the AMD Cloud training and benchmark evidence.
 
 Run the demo locally:
 
@@ -108,7 +108,7 @@ python3 evaluation/06_evaluate.py
 python3 evaluation/benchmark_comparison.py
 ```
 
-Serve with vLLM and launch the UI:
+Optionally test the vLLM-compatible serving path and launch the UI:
 
 ```bash
 python3 serving/07_serve_vllm.py
@@ -185,7 +185,7 @@ Useful copy for the submission is in [SUBMISSION.md](SUBMISSION.md).
 
 ## Current Status
 
-This repo is a clean working prototype and is ready to run on AMD Developer Cloud. The demo is usable without GPU through fallback mode, but final performance claims should come from the MI300X training and benchmark run described in [AMD_CLOUD_RUNBOOK.md](AMD_CLOUD_RUNBOOK.md).
+This repo is a clean working prototype with completed AMD Developer Cloud evidence. ProfiloAI was fine-tuned and benchmarked on AMD MI300X with ROCm/PyTorch, improving the benchmark score from 40.5% to 46.5% (+14.8%). The public Hugging Face Space runs in lightweight demo mode so judges can try the workflow without a live GPU server.
 
 ## One-Line Pitch
 
