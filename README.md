@@ -259,17 +259,9 @@ model name `profiloai`. Set `VLLM_MODEL` if the server uses another name.
 
 ProfiloAI is a working prototype with a Gradio demo, synthetic domain data,
 SFT and DPO training scripts, PEFT adapter evaluation, and vLLM-compatible
-serving. The repository is locally validated on Windows with 14/14 checks
-passing. Full training and GPU benchmark claims should be made only after
+serving. Full training and GPU benchmark claims should be made only after
 running the training and evaluation workflow on the target AMD environment.
 
-## Resume Summary
-
-> Built ProfiloAI, an AMD GPU performance assistant that converts ROCm profiler
-> output into bottleneck diagnoses, root-cause explanations, and actionable code
-> fixes. Implemented synthetic SFT/DPO data generation, PEFT/LoRA fine-tuning,
-> adapter-aware evaluation, vLLM-compatible serving, Gradio UI, and a 14-check
-> local validation pipeline.
 
 ## License
 
