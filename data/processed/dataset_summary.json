@@ -1,0 +1,21 @@
+{
+  "sft_examples": 21,
+  "dpo_examples": 8,
+  "bottleneck_types": [
+    "atomic_collisions",
+    "cache_thrashing_embeddings",
+    "dataloader",
+    "fp32_no_mixed_precision",
+    "gradient_checkpointing_overhead",
+    "kernel_launch_overhead",
+    "knowledge_qa",
+    "low_occupancy",
+    "matrix_dimension_misalignment",
+    "memory_bandwidth",
+    "mixed_precision",
+    "multi_gpu_allreduce",
+    "pcie_transfer_overhead",
+    "register_spilling",
+    "warp_divergence"
+  ]
+}
