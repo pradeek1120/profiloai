@@ -13,6 +13,8 @@ license: mit
 
 # ProfiloAI
 
+[Live Demo](https://huggingface.co/spaces/Pradeerock/profiloai) | [GitHub Repository](https://github.com/pradeek1120/profiloai)
+
 ProfiloAI is an AMD GPU performance assistant. It turns `rocprof`, `omniperf`,
 and training-loop metrics into:
 
@@ -23,6 +25,23 @@ and training-loop metrics into:
 
 It is designed for developers working with AMD Instinct GPUs, ROCm, PyTorch,
 and Hugging Face training workloads.
+
+## Technology Stack
+
+| Area | Technologies |
+| --- | --- |
+| Language | Python 3.12 |
+| UI | Gradio |
+| Model training | PyTorch, Transformers, Datasets, Accelerate |
+| Fine-tuning | PEFT/LoRA and TRL/DPO |
+| Serving | vLLM OpenAI-compatible API |
+| GPU platform | AMD Instinct MI300X and ROCm |
+| Evaluation | Python benchmark scripts and JSONL datasets |
+
+The project is intentionally Python-first because the UI, training pipeline,
+model serving, and evaluation are all implemented in Python. GitHub therefore
+shows Python as the dominant repository language; the table above gives the
+broader technology picture.
 
 ## Why This Project
 
